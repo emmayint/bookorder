@@ -15,16 +15,23 @@ Session = sessionmaker(bind=engine)
 # create a Session
 session = Session()
 
-#session.query(Order).filter(Order.book_id == 1).delete()
-session.query(Book).filter(Book.id == 1).delete()
+#session.query(Order).filter(Order.book_id == 3).delete()
+#session.query(Book).filter(Book.id == 3).delete()
 
-books = session.query(Book).all()
-for book in books:
-    print("Book id is %s and titile is %s" % (book.id, book.title))
+# books = session.query(Book).all()
+# for book in books:
+#     print("Book id is %s and titile is %s" % (book.id, book.title))
 
-orders = session.query(Order).all()
-for order in orders:
-    print("Order id is %s and book_id is %s" % (order.id, order.book_id))
+# orders = session.query(Order).all()
+# for order in orders:
+#     print("Order id is %s, %s copies of book_id %s" % (order.id, order.quantity, order.book_id))
+
+for b, o in session.query(Book, Order).filter(Book.id == Order.book_id).all():
+   print ("book ID: {}, title: {}, order No: {}, quantity: {}".format(b.id,b.title, o.id, o.quantity))
+
+results = session.query(Book, Order).join(Book, Book.id == Order.book_id).filter(Book.id == 1)
+for result in results:
+    print('Book Title: {}, order quantity: {}' .format(result[0].title, result[1].quantity))
 
 session.commit()
 session.close()
