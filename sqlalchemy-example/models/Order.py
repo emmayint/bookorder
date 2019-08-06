@@ -8,5 +8,4 @@ class Order(Base):
     __tablename__ = "order"
     id = Column('id', Integer, primary_key=True)
     quantity = Column('quantity', Integer)
-    book_id = Column('book_id', Integer, ForeignKey('book.id', ondelete='CASCADE'))
-    
+    book_id = Column('book_id', Integer, ForeignKey('book.id', onupdate="CASCADE", ondelete='CASCADE'))

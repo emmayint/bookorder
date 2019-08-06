@@ -12,15 +12,17 @@ Session = sessionmaker(bind=engine)
 session = Session()
 try:
     book = Book()
-    book.title = 'alembic'
+    book.id = 3
+    book.title = 'mariadb'
     session.add(book)
     session.flush()
     try:
         with session.begin_nested():
             #session.begin_nested()
             order = Order()
-            order.quantity = 105
-            order.book_id = 2
+            order.id = 1
+            order.quantity = 58
+            order.book_id = 3
             session.add(order)
     except:
         #session.rollback()
